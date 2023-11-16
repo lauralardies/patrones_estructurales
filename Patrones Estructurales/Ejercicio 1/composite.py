@@ -32,15 +32,7 @@ class MenuComponente(ABC):
         pass
 
 
-class HojaMenu(MenuComponente):
-    """
-    The Leaf class represents the end objects of a composition. A leaf can't
-    have any children.
-
-    Usually, it's the Leaf objects that do the actual work, whereas Composite
-    objects only delegate to their sub-components.
-    """
-
+class Pizza(MenuComponente):
     def __init__(self, nombre: str, precio: float) -> None:
         self._nombre = nombre
         self._precio = precio
@@ -52,21 +44,34 @@ class HojaMenu(MenuComponente):
         return self._precio
 
 
-class Composite(MenuComponente):
-    """
-    The Composite class represents the complex components that may have
-    children. Usually, the Composite objects delegate the actual work to their
-    children and then "sum-up" the result.
-    """
-
-    def __init__(self, nombre: str) -> None:
+class Bebida(MenuComponente):
+    def __init__(self, nombre: str, precio: float) -> None:
         self._nombre = nombre
-        self._hijos: List[MenuComponente] = []
+        self._precio = precio
+    
+    def operacion(self) -> str:
+        return f"{self._nombre}: {self._precio}."
+    
+    def precio(self) -> float:
+        return self._precio
 
-    """
-    A composite object can add or remove other components (both simple or
-    complex) to or from its child list.
-    """
+
+class Postre(MenuComponente):
+    def __init__(self, nombre: str, precio: float) -> None:
+        self._nombre = nombre
+        self._precio = precio
+    
+    def operacion(self) -> str:
+        return f"{self._nombre}: {self._precio}."
+    
+    def precio(self) -> float:
+        return self._precio
+
+
+class ComboPareja(MenuComponente):
+    def __init__(self) -> None:
+        self._nombre = "Combo pareja"
+        self._hijos: List[MenuComponente] = []
 
     def agregar(self, componente: MenuComponente) -> None:
         self._hijos.append(componente)
@@ -77,13 +82,6 @@ class Composite(MenuComponente):
         componente.padre = None
 
     def operacion(self) -> str:
-        """
-        The Composite executes its primary logic in a particular way. It
-        traverses recursively through all its children, collecting and summing
-        their results. Since the composite's children pass these calls to their
-        children and so forth, the whole object tree is traversed as a result.
-        """
-
         res = [hijo.operacion() for hijo in self._hijos]
         return f"{self._nombre}: {', '.join(res)}"
 
