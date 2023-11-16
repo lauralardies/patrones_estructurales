@@ -1,5 +1,6 @@
 from director import Director
 from pizza_builder import PizzaBuilder
+from composite import *
 from config import limpiar_pantalla
 
 # ¿Por qué empleamos el patrón Builder para este ejercicio?
@@ -41,25 +42,34 @@ def main():
 
     while True:
         limpiar_pantalla()
-        # Primero pedimos crear la pizza
-        print("Crea tu pizza: ")
-        director.construir_completo()
-        builder.pizza.guardar_csv()
-
-        # Luego mostramos la pizza creada
+        # Primero decidimos si queremos crear una pizza o coge run menú predefinido
+        print("Selecciona una opción:\n[1] Menú predefinido,\n[2] Crear pizza personalizada.")
+        opcion = input('>> ')
         limpiar_pantalla()
-        print("Tu pizza: ")
-        builder.pizza.visualizacion_csv()
+        if opcion == '1': # Si elegimos menú predefinido, mostramos los menús disponibles
+            pass
+        elif opcion == '2': # Si elegimos crear pizza personalizada
+            print("Crea tu pizza: ")
+            director.construir_completo()
+            builder.pizza.guardar_csv()
 
-        # Finalmente preguntamos si le gusta la pizza
-        print("¿Te gusta tu pizza? [Y]/N")
-        respuesta = input('>> ')
-        limpiar_pantalla()
-        if respuesta.capitalize() == 'N': # Si no le gusta, volvemos a empezar
-            builder.pizza.borrar_pizza()
-            print('Empecemos de nuevo')
+            # Luego mostramos la pizza creada
+            limpiar_pantalla()
+            print("Tu pizza: ")
+            builder.pizza.visualizacion_csv()
+
+            # Finalmente preguntamos si le gusta la pizza
+            print("¿Te gusta tu pizza? [Y]/N")
+            respuesta = input('>> ')
+            limpiar_pantalla()
+            if respuesta.capitalize() == 'N': # Si no le gusta, volvemos a empezar
+                builder.pizza.borrar_pizza()
+                print('Empecemos de nuevo')
+                input('Presiona cualquier tecla para continuar...')
+            else: # Si le gusta, guardamos la pizza y terminamos
+                print('¡Gracias por tu compra!')
+                input('Presiona cualquier tecla para continuar...')
+                break
+        else:
+            print('Opción no válida. Inténtalo de nuevo.\nDebes seleccionar 1 o 2')
             input('Presiona cualquier tecla para continuar...')
-        else: # Si le gusta, guardamos la pizza y terminamos
-            print('¡Gracias por tu compra!')
-            input('Presiona cualquier tecla para continuar...')
-            break
