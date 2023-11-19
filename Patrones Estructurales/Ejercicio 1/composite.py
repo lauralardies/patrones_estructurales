@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import List
-
+import csv
 
 class MenuComponente(ABC):
     """
@@ -29,6 +29,9 @@ class MenuComponente(ABC):
 
     @abstractmethod
     def precio(self) -> float:
+        pass
+
+    def agregar_csv(self) -> None:
         pass
 
 
@@ -80,6 +83,12 @@ class ComboPareja(MenuComponente):
     def precio(self) -> float:
         return sum(hijo.precio() for hijo in self._hijos)
     
+    def agregar_csv(self) -> None:
+        nombres = [self._hijos[i]._nombre for i in range(len(self._hijos))]
+        with open("Patrones Estructurales/Ejercicio 1/data/pizza_cliente.csv", "a", newline="") as archivo:
+            writer = csv.writer(archivo)
+            writer.writerow(nombres)
+    
 class Basico(MenuComponente):
     def __init__(self, pizza="Pizza", bebida="Refresco", postre="Postre") -> None:
         self._nombre = "Básico"
@@ -91,3 +100,9 @@ class Basico(MenuComponente):
 
     def precio(self) -> float:
         return sum(hijo.precio() for hijo in self._hijos)
+    
+    def agregar_csv(self) -> None:
+        nombres = [self._hijos[i]._nombre for i in range(len(self._hijos))]
+        with open("Patrones Estructurales/Ejercicio 1/data/pizza_cliente.csv", "a", newline="") as archivo:
+            writer = csv.writer(archivo)
+            writer.writerow(nombres)
