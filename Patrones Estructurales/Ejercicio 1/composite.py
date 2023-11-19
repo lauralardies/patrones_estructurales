@@ -69,25 +69,25 @@ class Postre(MenuComponente):
 
 
 class ComboPareja(MenuComponente):
-    def __init__(self, pizza1, pizza2, bebida, postre) -> None:
+    def __init__(self, pizza1="Pizza 1", pizza2="Pizza 2", bebida="Refresco", postre="Postre") -> None:
         self._nombre = "Combo pareja"
         self._hijos: List[MenuComponente] = [Pizza(pizza1, 7.00), Pizza(pizza2, 7.00), Bebida(bebida, 1.50), Postre(postre, 2.25)]
 
     def operacion(self) -> str:
         res = [hijo.operacion() for hijo in self._hijos]
-        return f"Menú Combo Pareja:\n{self._nombre}: {', '.join(res)}"
+        return f"Menú {self._nombre}:\n {', '.join(res)}"
 
     def precio(self) -> float:
         return sum(hijo.precio() for hijo in self._hijos)
     
-class ComboPareja(MenuComponente):
-    def __init__(self, pizza, bebida, postre) -> None:
+class Basico(MenuComponente):
+    def __init__(self, pizza="Pizza", bebida="Refresco", postre="Postre") -> None:
         self._nombre = "Básico"
         self._hijos: List[MenuComponente] = [Pizza(pizza, 7.00), Bebida(bebida, 1.50), Postre(postre, 2.25)]
 
     def operacion(self) -> str:
         res = [hijo.operacion() for hijo in self._hijos]
-        return f"Menú Básico:\n{self._nombre}: {', '.join(res)}"
+        return f"Menú {self._nombre}:\n {', '.join(res)}"
 
     def precio(self) -> float:
         return sum(hijo.precio() for hijo in self._hijos)
