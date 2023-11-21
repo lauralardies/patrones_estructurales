@@ -4,7 +4,7 @@ from composite import *
 from config import limpiar_pantalla
 
 
-
+# Cliente
 def main():
     '''
     Desde esta función, el cliente podrá acceder a los servicios de la pizzeria desde la terminal
