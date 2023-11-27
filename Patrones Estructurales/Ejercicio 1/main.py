@@ -1,6 +1,7 @@
 from director import Director
 from pizza_builder import PizzaBuilder
-from composite import *
+from combo_pareja import ComboPareja
+from basico_menu import Basico
 from config import limpiar_pantalla
 
 
