@@ -1,7 +1,11 @@
 import unittest
 import os
 import csv
-from composite import Pizza, Bebida, Postre, ComboPareja, Basico
+from pizza_menucomponente import Pizza
+from bebida_menucomponente import Bebida
+from postre_menucomponente import Postre
+from combo_pareja import ComboPareja
+from basico_menu import Basico
 
 class TestMenuComponente(unittest.TestCase):
 
@@ -51,9 +55,8 @@ class TestMenuComponente(unittest.TestCase):
     def test_agregar_csv(self):
         self.combo_pareja.agregar_csv()
         with open("Patrones Estructurales/Ejercicio 1/data/pizza_cliente.csv", newline="") as archivo:
-            reader = csv.reader(archivo)
-            row = next(reader)
-            expected_row = ["Pizza Margarita", "Pizza Hawaiana", "Agua", "Helado"]
+            row = archivo.readlines()[-1]
+            expected_row = "Pizza Margarita,Pizza Hawaiana,Agua,Helado\r\n"
             self.assertEqual(row, expected_row)
 
 if __name__ == '__main__':
