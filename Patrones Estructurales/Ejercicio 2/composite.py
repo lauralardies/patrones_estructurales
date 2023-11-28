@@ -2,6 +2,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import List
 from config import limpiar_pantalla
+from proxy import Proxy
 
 
 class Component(ABC):
@@ -40,6 +41,7 @@ class Documento(Component):
         self._tam = tam
         self._sensible = sensible 
     
+    @Proxy.request
     def add(self):
         print("Este es el contenido de su documento: \n\n" + self._contenido)
         input("Pulse cualquier tecla para continuar...")
@@ -50,7 +52,8 @@ class Documento(Component):
         limpiar_pantalla()
         print("Se ha añadido el texto correctamente.\n\nEste es el contenido de su documento actualizado: \n\n" + self._contenido)
         input("Pulse cualquier tecla para continuar...")
-       
+
+    @Proxy.request
     def remove(self):
         print("Este es el contenido de su documento: \n\n" + self._contenido)
         input("Pulse cualquier tecla para continuar...")
@@ -67,7 +70,8 @@ class Documento(Component):
     
     def tam(self) -> str:
         return self._tam
-    
+
+    @Proxy.request
     def access(self):
         return self._contenido
 
