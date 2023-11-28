@@ -42,35 +42,19 @@ class Documento(Component):
         self._sensible = sensible 
         self._access = False
     
-    def add(self):
-        if self._access: # Sólo lo pudes modificar si ya has registrado tu acceso
-            print("Este es el contenido de su documento: \n\n" + self._contenido)
+    def add(self, texto):
+        if self._sensible & (not self._access): # Si es sensible y no has registrado tu acceso, no puedes modificarlo
+            print("No puede modificar el documento si no ha registrado su acceso previamente.")
             input("Pulse cualquier tecla para continuar...")
-            limpiar_pantalla()
-            print("Introduzca el texto que desea añadir al documento, se añadirá al final del mismo: ")
-            texto = input(">> ")
+        else:
             self._contenido += texto
-            limpiar_pantalla()
-            print("Se ha añadido el texto correctamente.\n\nEste es el contenido de su documento actualizado: \n\n" + self._contenido)
-            input("Pulse cualquier tecla para continuar...")
-        else:
-            print("No puede modificar el documento si no ha registrado su acceso previamente.")
-            input("Pulse cualquier tecla para continuar...")
 
-    def remove(self):
-        if self._access: # Sólo lo pudes modificar si ya has registrado tu acceso
-            print("Este es el contenido de su documento: \n\n" + self._contenido)
-            input("Pulse cualquier tecla para continuar...")
-            limpiar_pantalla()
-            print("Introduzca el texto que desea eliminar del documento: ")
-            texto = input(">> ")
-            self._contenido = self._contenido.replace(texto, "")
-            limpiar_pantalla()
-            print("Se ha eliminado el texto correctamente.\n\nEste es el contenido de su documento actualizado: \n\n" + self._contenido)
-            input("Pulse cualquier tecla para continuar...")
-        else:
+    def remove(self, texto):
+        if self._sensible & (not self._access): # Si es sensible y no has registrado tu acceso, no puedes modificarlo
             print("No puede modificar el documento si no ha registrado su acceso previamente.")
             input("Pulse cualquier tecla para continuar...")
+        else:
+            self._contenido = self._contenido.replace(texto, "")
 
     def get_name(self) -> str:
         return f"Archivo {self._nombre}"

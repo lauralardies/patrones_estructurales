@@ -44,7 +44,7 @@ def client_code(component: Component) -> None:
             while True:
                 try:
                     limpiar_pantalla()
-                    tam = float(input("Introduzca el tamaño del documento: "))
+                    tam = float(input("Introduzca el tamaño del documento (en bytes): "))
                     break
                 except ValueError:
                     limpiar_pantalla()
@@ -110,11 +110,46 @@ def client_code(component: Component) -> None:
                 component = elemento
 
             elif tipo == 'Archivo':
-                limpiar_pantalla()
                 contenido = elemento.access()
-                print("\nContenido:\n")
-                print(contenido)
-                input("\nPulse enter para continuar.")
+                while True:
+                    limpiar_pantalla()
+                    print(f"Contenido {elemento.get_name()}:\n")
+                    print(contenido)
+                    print("\n¿Qué desea hacer?")
+                    print("1. Agregar contenido")
+                    print("2. Eliminar contenido")
+                    print("3. Ver tamaño")
+                    print("4. Salir")
+                    opcion = input("Introduzca el número de la opción que desee: ")
+                    limpiar_pantalla()
+
+                    if opcion == '1':
+                        texto = input("Introduzca el contenido que desea agregar: ")
+                        elemento.add(texto)
+                        contenido = elemento._contenido
+                        limpiar_pantalla()
+                        print("Contenido agregado correctamente.")
+                        input("Pulse enter para continuar.")
+
+                    elif opcion == '2':
+                        texto = input("Introduzca el contenido que desea eliminar: ")
+                        elemento.remove(texto)
+                        contenido = elemento._contenido
+                        limpiar_pantalla()
+                        print("Contenido eliminado correctamente.")
+                        input("Pulse enter para continuar.")
+
+                    elif opcion == '3':
+                        print(f"El tamaño del archivo es de {elemento.tam()} bytes.")
+                        input("Pulse enter para continuar.")
+
+                    elif opcion == '4':
+                        input("Pulse enter para continuar.")
+                        break
+
+                    else:
+                        print("Opción no válida. Inténtelo de nuevo.")
+                        input("Pulse enter para continuar.")
             
             elif tipo == 'Enlace':
                 limpiar_pantalla()
