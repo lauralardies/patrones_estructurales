@@ -23,7 +23,35 @@ def client_code(component: Component) -> None:
             print("Carpeta creada correctamente.")
             input("Pulse enter para continuar.")
         elif opcion == "2":
-            pass
+            nombre = input("Introduzca el nombre del documento: ")
+            while True:
+                limpiar_pantalla()
+                print("- Tipos de documentos -\n- Texto\n- Imagen\n- Video\n- Audio\n- Otro\n")
+                tipo = input("Introduzca el tipo del documento: ")
+                if tipo not in ["Texto", "Imagen", "Video", "Audio", "Otro"]:
+                    limpiar_pantalla()
+                    print("Tipo de documento no válido. Inténtelo de nuevo.")
+                    input("Pulse enter para continuar.")
+                else:
+                    limpiar_pantalla()
+                    break
+            contenido = input("Introduzca el contenido del documento: ")
+            limpiar_pantalla()
+            while True:
+                try:
+                    limpiar_pantalla()
+                    tam = float(input("Introduzca el tamaño del documento: "))
+                    break
+                except ValueError:
+                    limpiar_pantalla()
+                    print("Tamaño no válido. Inténtelo de nuevo. Asegúrese de introducir solo números. En caso de haber decimal, introduczca un punto en vez de una coma.")
+                    input("Pulse enter para continuar.")
+                    continue
+            limpiar_pantalla()
+            component.add(Documento(nombre, contenido, tipo, tam))
+            limpiar_pantalla()
+            print("Documento creado correctamente.")
+            input("Pulse enter para continuar.")
         elif opcion == "3":
             pass
         elif opcion == "4":
