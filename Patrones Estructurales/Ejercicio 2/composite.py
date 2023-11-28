@@ -73,7 +73,7 @@ class Documento(Component):
             input("Pulse cualquier tecla para continuar...")
 
     def get_name(self) -> str:
-        return self._nombre
+        return f"Archivo {self._nombre}"
     
     def tam(self) -> str:
         return self._tam
@@ -105,7 +105,7 @@ class Enlace(Component):
         self._tam = 2 # Tamaño simbólico
 
     def get_name(self) -> str:
-        return self._nombre
+        return f"Enlace {self._nombre}"
     
     def tam(self) -> str:
         return self._tam
@@ -131,7 +131,7 @@ class Carpeta(Component):
         component.parent = None
 
     def get_name(self) -> str:
-        return self._nombre
+        return f"Carpeta {self._nombre}"
 
     def tam(self) -> str:
         return self._tam
