@@ -36,6 +36,25 @@ Tras el éxito inicial de su plataforma digital de creación y gestión de pizza
  
 ### Ejercicio 2
 
+El SAMUR-Protección Civil, tras su proceso de digitalización, se enfrenta al reto de administrar una cantidad masiva de documentos digitales relacionados con sus activaciones y operaciones. Esta documentación no solo consiste en informes y registros, sino que también incluye imágenes, vídeos, audios y otros tipos de archivos multimedia. La necesidad de garantizar un acceso rápido pero seguro a esta información es esencial, especialmente cuando se trata de datos sensibles o confidenciales.
+
+- Documentos: Estos son los archivos básicos en el sistema. Cada documento tiene un nombre, un tipo (texto, imagen, video, etc.) y un tamaño. El contenido de estos documentos puede ser accedido y modificado, pero para algunos documentos sensibles, es necesario llevar un registro de quién y cuándo se accede o modifica.
+- Enlaces (Links): Son referencias a otros documentos o carpetas en el sistema. No poseen contenido propio, pero ofrecen una forma rápida de acceder a la información referenciada. Su tamaño es simbólico, no correspondiente al tamaño real del archivo o carpeta al que apuntan.
+- Carpetas: Contenedores que albergan varios documentos, enlaces y otras carpetas. Su tamaño es la suma de los tamaños de todos los elementos contenidos. Se pueden expandir añadiendo más elementos en cualquier momento.
+- Proxy de Acceso: Para garantizar la seguridad y la trazabilidad en el acceso a los documentos, se implementará un proxy que actuará como intermediario. Este proxy registrará cada acceso o modificación a los documentos, especialmente aquellos que sean sensibles o confidenciales, y solo permitirá el acceso a usuarios autorizados.
+
+**Objetivos:**
+1. Utilizar el patrón de diseño Composite para modelar la estructura de documentos del sistema.
+2. Implementar el patrón Proxy para controlar y registrar el acceso a documentos específicos.
+3. Desarrollar en Python las clases y la lógica necesaria para representar y gestionar los documentos, enlaces y carpetas, garantizando la seguridad y trazabilidad mediante el uso del proxy.
+4. Implementar funciones que faciliten la navegación, creación, modificación y eliminación de elementos en el sistema.
+
+**Instrucciones:**
+- Diseñar un diagrama de clases que refleje la estructura propuesta, identificando las relaciones, interfaces y métodos esenciales.
+- Implementar las clases en Python, asegurando buenas prácticas y la utilización adecuada de los patrones de diseño Composite y Proxy.
+- Crear funciones que permitan navegar por la estructura, añadir documentos, modificar contenidos, eliminar elementos y acceder a través del Proxy.
+- Desarrollar pruebas para validar la correcta implementación y comportamiento del sistema, especialmente en lo que respecta a la seguridad y registro de acceso a los documentos.
+
 ## Archivos
 
 ## Código
