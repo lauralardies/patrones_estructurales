@@ -60,7 +60,9 @@ Todos los archivos están guardados en una carpeta llamada `Patrones Estructural
 - Carpeta `Ejercicio 1`:
   - Carpeta `data`. Aquí se genera un archivo `pizza_cliente.csv` donde se van almacenando las pizzas que pide el cliente.
   - Carpeta `uml`. Aquí se guarda una imagen PNG que representa un diagrama de clases del patrón Composite que hemos desarrollado.
-    ![uml](https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 1/uml/uml.png?raw=true)
+    
+![uml](https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 1/uml/uml.png?raw=true)
+    
   - Archivo `config.py` que contiene una función encargada de limpiar la terminal del usuario.
   - Archivo `tests.py`, donde se desarrollan pruebas para validar la correcta implementación y comportamiento del sistema.
   - Archivos que conforman un patrón Builder. Estos archivos son: `builder.py`, `director.py`, `pizza_builder.py`, `pizza.py`.
@@ -70,8 +72,11 @@ Todos los archivos están guardados en una carpeta llamada `Patrones Estructural
 - Carpeta `Ejercicio 2`:
   - Carpeta `accesos`. Aquí se genera un archivo `registro_accesos.log` donde se van almacenando los registros de los usuarios que acceden a archivos clasificados como sensibles. 
   - Carpeta `uml`. Aquí se guardan dos imágenes PNG que representan los diagramas de clases de los patrones Composite y Proxy que hemos desarrollado.
-    ![uml1](https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 2/uml/composite_uml.png?raw=true)
-    ![uml2](https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 2/uml/proxy_uml.png?raw=true)
+    
+![uml1](https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 2/uml/composite_uml.png?raw=true)
+   
+![uml2](https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 2/uml/proxy_uml.png?raw=true)
+    
   - Archivo `config.py` que contiene una función encargada de limpiar la terminal del usuario.
   - Archivo `log.py` es donde se define un decorador personalizado que toma como parámetro la ruta del archivo `registro_accesos.log`. Si se pone el decorador sobre una función, el decorador almacena la información que devuelve dicha función en el archivo `registro_accesos.log`.
   - Archivo `tests.py`, donde se desarrollan pruebas para validar la correcta implementación y comportamiento del sistema.
