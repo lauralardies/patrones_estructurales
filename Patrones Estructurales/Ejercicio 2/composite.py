@@ -38,7 +38,7 @@ class Documento(Component):
         self._contenido = contenido
         self._tipo = tipo
         self._tam = tam
-        self._sensible = sensible
+        self._sensible = sensible 
     
     def add(self):
         print("Este es el contenido de su documento: \n\n" + self._contenido)
@@ -72,10 +72,10 @@ class Documento(Component):
         return self._contenido
 
 class Enlace(Component):
-    def __init__(self, ruta, tam) -> None:
+    def __init__(self, ruta) -> None:
         self._nombre = ruta.split("/")[-1] # Nombre del enlace = nombre del archivo al que apunta
         self._ruta = ruta
-        self._tam = tam # Tamaño simbólico
+        self._tam = 2 # Tamaño simbólico
 
     def get_name(self) -> str:
         return self._nombre
