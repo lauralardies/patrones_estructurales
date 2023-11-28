@@ -3,7 +3,6 @@
 Mi dirección de GitHub para este repositorio es la siguiente: [GitHub](https://github.com/lauralardies/patrones_estructurales)
 https://github.com/lauralardies/patrones_estructurales
 
-
 ## Enunciados
 
 En este repositorio trabajamos sobre dos ejercicios diferentes:
@@ -56,6 +55,30 @@ El SAMUR-Protección Civil, tras su proceso de digitalización, se enfrenta al r
 - Desarrollar pruebas para validar la correcta implementación y comportamiento del sistema, especialmente en lo que respecta a la seguridad y registro de acceso a los documentos.
 
 ## Archivos
+
+Todos los archivos están guardados en una carpeta llamada `Patrones Estructurales`, que a su vez contiene:
+- Carpeta `Ejercicio 1`:
+  - Carpeta `data`. Aquí se genera un archivo `pizza_cliente.csv` donde se van almacenando las pizzas que pide el cliente.
+  - Carpeta `uml`. Aquí se guarda una imagen PNG que representa un diagrama de clases del patrón Composite que hemos desarrollado.
+    <img src="(https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 1/uml/uml.png)" width="128"/>
+  - Archivo `config.py` que contiene una función encargada de limpiar la terminal del usuario.
+  - Archivo `tests.py`, donde se desarrollan pruebas para validar la correcta implementación y comportamiento del sistema.
+  - Archivos que conforman un patrón Builder. Estos archivos son: `builder.py`, `director.py`, `pizza_builder.py`, `pizza.py`.
+  - Archivos que conforman un patrón Composite. Estos archivos son: `basico_menu.py`, `bebida_menucomponente.py`, `combo_pareja.py`, `menu_componente.py`, `pizza_menucomponente.py`, `postre_menucomponente.py`.
+  - Archivo `main.py`, código cliente que junta ambos patrones y es lo que ve el usuario.
+  - Archivo `run.py`, el lanzador.
+- Carpeta `Ejercicio 2`:
+  - Carpeta `accesos`. Aquí se genera un archivo `registro_accesos.log` donde se van almacenando los registros de los usuarios que acceden a archivos clasificados como sensibles. 
+  - Carpeta `uml`. Aquí se guardan dos imágenes PNG que representan los diagramas de clases de los patrones Composite y Proxy que hemos desarrollado.
+    <img src="(https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 2/uml/composite_uml.png)" width="128"/>
+    <img src="(https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/Ejercicio 2/uml/proxy_uml.png)" width="128"/>
+  - Archivo `config.py` que contiene una función encargada de limpiar la terminal del usuario.
+  - Archivo `log.py` es donde se define un decorador personalizado que toma como parámetro la ruta del archivo `registro_accesos.log`. Si se pone el decorador sobre una función, el decorador almacena la información que devuelve dicha función en el archivo `registro_accesos.log`.
+  - Archivo `tests.py`, donde se desarrollan pruebas para validar la correcta implementación y comportamiento del sistema.
+  - Archivos que conforman un patrón Composite. Estos archivos son: `carpeta.py`, `component.py`, `documento.py`, `enlace.py`.
+  - Archivos que conforman un patrón Proxy. Estos archivos son: `proxy.py`, `real_subject.py`, `subject.py`.
+  - Archivo `main.py`, código cliente que junta ambos patrones y es lo que ve el usuario.
+  - Archivo `run.py`, el lanzador.
 
 ## Código
 
