@@ -737,3 +737,515 @@ if __name__ == '__main__':
 
 ### Ejercicio 2
 
+#### Archivo `carpeta.py`
+```
+from component import Component
+from typing import List
+
+
+class Carpeta(Component):
+    def __init__(self, nombre, parent=None) -> None:
+        self._nombre = nombre
+        self._parent = parent
+        self._children: List[Component] = []
+        self._tam = 0
+
+    def add(self, component: Component) -> None:
+        self._children.append(component)
+        self._tam += int(component.tam())
+        component.parent = self
+
+    def remove(self, component: Component) -> None:
+        self._children.remove(component)
+        self._tam -= int(component.tam())
+        component.parent = None
+
+    def get_name(self) -> str:
+        return f"Carpeta {self._nombre}"
+
+    def tam(self) -> str:
+        return self._tam
+    
+    def access(self) -> None:
+        return [x.get_name() for x in self._children]
+```
+
+#### Archivo `component.py`
+```
+from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+class Component(ABC):
+    @property
+    def parent(self) -> Component:
+        return self._parent
+
+    @parent.setter
+    def parent(self, parent: Component):
+        self._parent = parent
+
+    def add(self, component: Component) -> None:
+        pass
+
+    def remove(self, component: Component) -> None:
+        pass
+
+    @abstractmethod
+    def get_name(self) -> str:
+        pass
+
+    @abstractmethod
+    def tam(self) -> str:
+        pass
+
+    @abstractmethod
+    def access(self):
+        pass
+```
+
+#### Archivo `config.py`
+```
+import os
+import platform
+
+
+def limpiar_pantalla():
+    os.system('cls') if platform.system() == "Windows" else os.system('clear')
+```
+
+#### Archivo `documento.py`
+```
+from component import Component
+from config import limpiar_pantalla
+from real_subject import RealSubject
+from proxy import Proxy
+
+
+class Documento(Component):
+    def __init__(self, nombre, contenido, tipo, tam, sensible=False) -> None:
+        self._nombre = nombre
+        self._contenido = contenido
+        self._tipo = tipo
+        self._tam = tam
+        self._sensible = sensible 
+        self._access = False
+    
+    def add(self, texto):
+        if self._sensible & (not self._access): # Si es sensible y no has registrado tu acceso, no puedes modificarlo
+            print("No puede modificar el documento si no ha registrado su acceso previamente.")
+            input("Pulse cualquier tecla para continuar...")
+        else:
+            self._contenido += texto
+
+    def remove(self, texto):
+        if self._sensible & (not self._access): # Si es sensible y no has registrado tu acceso, no puedes modificarlo
+            print("No puede modificar el documento si no ha registrado su acceso previamente.")
+            input("Pulse cualquier tecla para continuar...")
+        else:
+            self._contenido = self._contenido.replace(texto, "")
+
+    def get_name(self) -> str:
+        return f"Archivo {self._nombre}"
+    
+    def tam(self) -> str:
+        return self._tam
+ 
+    def access(self):
+        if self._sensible:
+            while True:
+                limpiar_pantalla()
+                print("El documento es sensible, se va a registrar su acceso. Facilite los siguientes datos:")
+                nombre = input("Nombre: ")
+                apellido = input("Apellido: ")
+                dni = input("DNI: ")
+                if nombre.isalpha() and apellido.isalpha() and dni.isalnum() and len(dni) == 9:
+                    break
+                else:
+                    limpiar_pantalla()
+                    print("Los datos introducidos no son válidos, inténtelo de nuevo.")
+                    print("Asegúrese de no introducir espacios y de que el DNI tenga 8 dígitos y 1 letra.")
+
+            real_subject = RealSubject(nombre, apellido, dni)
+            self._access = Proxy(real_subject).request()
+
+            if not self._access:
+                return "No tiene acceso a este documento"
+            
+        return self._contenido
+```
+
+#### Archivo `enlace.py`
+```
+from component import Component
+
+
+class Enlace(Component):
+    def __init__(self, ruta) -> None:
+        self._nombre = ruta.split("/")[-1] # Nombre del enlace = nombre del archivo al que apunta
+        self._ruta = ruta
+        self._tam = 2 # Tamaño simbólico
+
+    def get_name(self) -> str:
+        return f"Enlace {self._nombre}"
+    
+    def tam(self) -> str:
+        return self._tam
+    
+    def access(self):
+        return self._ruta
+```
+
+#### Archivo `log.py`
+```
+import datetime
+
+
+def log(fichero_log):
+    def decorador_log(func):
+        def decorador_funcion(*args, **kwargs):
+            with open(fichero_log, 'a') as opened_file:
+                output = func(*args, **kwargs)
+                output.append(str(datetime.datetime.now()))
+                opened_file.write(f"{output}\n")
+        return decorador_funcion
+    return decorador_log
+```
+
+#### Archivo `main.py`
+```
+from component import Component
+from config import limpiar_pantalla
+from carpeta import Carpeta
+from documento import Documento
+from enlace import Enlace
+
+
+def client_code(component: Component) -> None:
+    while True:
+        limpiar_pantalla()
+        # Mostramos el contenido de la carpeta
+        print(f"Contenido {component.get_name()}: ")
+        print(f"Tamaño: {component.tam()} bytes")
+        contenido = component.access()
+        for c in contenido:
+            print(f"- {c}")
+        print("\n\n¿Qué desea hacer?")
+        print("1. Crear carpeta")
+        print("2. Crear documento")
+        print("3. Crear enlace")
+        print("4. Acceder elemento")
+        print("5. Eliminar elemento")
+        print("6. Salir")
+        opcion = input("Introduzca el número de la opción que desee: ")
+        limpiar_pantalla()
+
+        if opcion == "1":
+            nombre = input("Introduzca el nombre de la carpeta: ")
+            component.add(Carpeta(nombre, component))
+            limpiar_pantalla()
+            print("Carpeta creada correctamente.")
+            input("Pulse enter para continuar.")
+
+        elif opcion == "2":
+            nombre = input("Introduzca el nombre del documento: ")
+            while True:
+                limpiar_pantalla()
+                print("- Tipos de documentos -\n- Texto\n- Imagen\n- Video\n- Audio\n- Otro\n")
+                tipo = input("Introduzca el tipo del documento: ")
+                if tipo not in ["Texto", "Imagen", "Video", "Audio", "Otro"]:
+                    limpiar_pantalla()
+                    print("Tipo de documento no válido. Inténtelo de nuevo.")
+                    input("Pulse enter para continuar.")
+                else:
+                    limpiar_pantalla()
+                    break
+            contenido = input("Introduzca el contenido del documento: ")
+            limpiar_pantalla()
+            while True:
+                try:
+                    limpiar_pantalla()
+                    tam = float(input("Introduzca el tamaño del documento (en bytes): "))
+                    break
+                except ValueError:
+                    limpiar_pantalla()
+                    print("Tamaño no válido. Inténtelo de nuevo. Asegúrese de introducir solo números. En caso de haber decimal, introduczca un punto en vez de una coma.")
+                    input("Pulse enter para continuar.")
+                    continue
+            limpiar_pantalla()
+            print("¿Es un documento sensible? Y/[N]")
+            seleccion = input(">> ")
+            limpiar_pantalla()
+            if seleccion.capitalize() == "Y":
+                component.add(Documento(nombre, contenido, tipo, tam, True))
+                print("El documento es sensible, se registraran los datos de todo aquel que acceda a él.")
+            else:
+                component.add(Documento(nombre, contenido, tipo, tam))
+                print("El documento no es sensible, no se registrarán los datos de todo aquel que acceda a él.")
+            print("Documento creado correctamente.")
+            input("Pulse enter para continuar.")
+
+        elif opcion == "3":
+            while True:
+                ruta = input("Introduzca la ruta del enlace: ")
+                if "/" not in ruta:
+                    limpiar_pantalla()
+                    print("Ruta no válida. Inténtelo de nuevo. Debe incluir al menos un '/'.")
+                    input("Pulse enter para continuar.")
+                    limpiar_pantalla()
+                else:
+                    break
+            component.add(Enlace(ruta))
+            limpiar_pantalla()
+            print("Enlace creado correctamente.")
+            input("Pulse enter para continuar.")
+
+        elif opcion == "4":
+            while True:
+                # Mostramos el contenido de la carpeta
+                print(f"Contenido {component.get_name()}: ")
+                print(f"Tamaño: {component.tam()} bytes")
+                contenido = component.access()
+                for c in contenido:
+                    print(f"- {c}")
+                elemento = input("\n\nIntroduzca el nombre del elemento que desea acceder: ")
+                if elemento not in component.access():
+                    limpiar_pantalla()
+                    print("Este elemento no existe en la carpeta. Inténtelo de nuevo. Asegúrese de incluir Archivo, Carpeta o Enlace en el nombre.")
+                    input("Pulse enter para continuar.")
+                    limpiar_pantalla()
+                else:
+                    if 'Archivo' in elemento:
+                        tipo = 'Archivo'
+                    elif 'Carpeta' in elemento:
+                        tipo = 'Carpeta'
+                    elif 'Enlace' in elemento:
+                        tipo = 'Enlace'
+                    break
+            for child in component._children:
+                if child.get_name() == elemento:
+                    elemento = child
+                    break
+
+            if tipo == 'Carpeta':
+                component = elemento
+
+            elif tipo == 'Archivo':
+                contenido = elemento.access()
+                while True:
+                    limpiar_pantalla()
+                    print(f"Contenido {elemento.get_name()}:\n")
+                    print(contenido)
+                    print("\n¿Qué desea hacer?")
+                    print("1. Agregar contenido")
+                    print("2. Eliminar contenido")
+                    print("3. Ver tamaño")
+                    print("4. Salir")
+                    opcion = input("Introduzca el número de la opción que desee: ")
+                    limpiar_pantalla()
+
+                    if opcion == '1':
+                        texto = input("Introduzca el contenido que desea agregar: ")
+                        elemento.add(texto)
+                        contenido = elemento._contenido
+                        limpiar_pantalla()
+                        print("Contenido agregado correctamente.")
+                        input("Pulse enter para continuar.")
+
+                    elif opcion == '2':
+                        texto = input("Introduzca el contenido que desea eliminar: ")
+                        elemento.remove(texto)
+                        contenido = elemento._contenido
+                        limpiar_pantalla()
+                        print("Contenido eliminado correctamente.")
+                        input("Pulse enter para continuar.")
+
+                    elif opcion == '3':
+                        print(f"El tamaño del archivo es de {elemento.tam()} bytes.")
+                        input("Pulse enter para continuar.")
+
+                    elif opcion == '4':
+                        input("Pulse enter para continuar.")
+                        break
+
+                    else:
+                        print("Opción no válida. Inténtelo de nuevo.")
+                        input("Pulse enter para continuar.")
+            
+            elif tipo == 'Enlace':
+                limpiar_pantalla()
+                print("Contenido:\n")
+                print(elemento.access())
+                input("\nPulse enter para continuar.")
+
+
+        elif opcion == "5":
+            while True:
+                # Mostramos el contenido de la carpeta
+                print(f"Contenido {component.get_name()}: ")
+                print(f"Tamaño: {component.tam()} bytes")
+                contenido = component.access()
+                for c in contenido:
+                    print(f"- {c}")
+                elemento = input("\n\nIntroduzca el nombre del elemento que desea eliminar: ")
+                if elemento not in component.access():
+                    limpiar_pantalla()
+                    print("Este elemento no existe en la carpeta. Inténtelo de nuevo. Asegúrese de incluir Archivo, Carpeta o Enlace en el nombre.")
+                    input("Pulse enter para continuar.")
+                    limpiar_pantalla()
+                else:
+                    break
+            for child in component._children:
+                if child.get_name() == elemento:
+                    elemento = child
+                    break
+            component.remove(elemento)
+            limpiar_pantalla()
+            print("Elemento eliminado correctamente.")
+            input("Pulse enter para continuar.")
+
+        elif opcion == "6":
+            if component._parent == None:
+                print("Saliendo...")
+                input("Pulse enter para continuar.")
+                break
+            else:
+                component = component._parent
+
+        else:
+            print("Opción no válida. Inténtelo de nuevo.")
+            input("Pulse enter para continuar.")
+```
+
+#### Archivo `proxy.py`
+```
+from subject import Subject
+from real_subject import RealSubject
+
+
+class Proxy(Subject):
+    def __init__(self, real_subject: RealSubject) -> None:
+        self._real_subject = real_subject
+
+    def request(self):
+        if self.check_access():
+            self._real_subject.request()
+            self.log_access()
+            return True
+        return False
+
+    def check_access(self) -> bool:
+        print("Proxy: Checking access prior to firing a real request.")
+        return True
+
+    def log_access(self) -> None:
+        print("Proxy: Logging the time of request.", end="")
+```
+
+#### Archivo `real_subject.py`
+```
+from log import log
+from subject import Subject
+
+
+class RealSubject(Subject):
+    def __init__(self, nombre, apellido, dni) -> None:
+        self._nombre = nombre
+        self._apellido = apellido
+        self._dni = dni
+
+    @log('Patrones Estructurales/Ejercicio 2/accesos/registro_accesos.log')
+    def request(self) -> None:
+        '''
+        Si el usuario hace una petición, se mostrará su nombre, apellido y dni.
+        '''
+        return [self._nombre, self._apellido, self._dni] 
+```
+
+#### Archivo `run.py`
+```
+from main import client_code
+from carpeta import Carpeta
+
+
+if __name__ == '__main__':
+    client_code(Carpeta('root')) # Inicializamos el programa con una carpeta raíz
+```
+
+#### Archivo `subject.py`
+```
+from abc import ABC, abstractmethod
+
+
+class Subject(ABC):
+    @abstractmethod
+    def request(self) -> None:
+        pass
+```
+
+#### Archivo `tests.py`
+```
+import unittest
+from unittest.mock import patch
+from real_subject import RealSubject
+from proxy import Proxy
+from documento import Documento
+from enlace import Enlace
+from carpeta import Carpeta
+
+
+class TestTuModulo(unittest.TestCase):
+
+    def setUp(self):
+        # Crea instancias necesarias para las pruebas
+        self.real_subject = RealSubject("Nombre", "Apellido", "12345678Y")
+        self.proxy = Proxy(self.real_subject)
+
+    def test_proxy_request_without_access(self):
+        # Prueba para el método request de Proxy sin acceso
+        with patch.object(self.proxy, 'check_access', return_value=False):
+            with patch("builtins.print") as mock_print:
+                output = self.proxy.request()
+                mock_print.assert_not_called()
+                self.assertEqual(output, False)
+
+    def test_documento_add_without_access(self):
+        # Prueba para el método add de Documento sin acceso
+        documento = Documento("Test", "Contenido", "Texto", 10, sensible=True)
+        with patch("builtins.print") as mock_print:
+            with patch("builtins.input", side_effect=["Nombre", "Apellido", "12345678Y"]):
+                documento.add("Nuevo contenido")
+                mock_print.assert_called_with("No puede modificar el documento si no ha registrado su acceso previamente.")
+                self.assertEqual(documento._contenido, "Contenido")
+
+    def test_enlace_access(self):
+        # Prueba para el método access de Enlace
+        enlace = Enlace("/ruta/al/enlace")
+        self.assertEqual(enlace.access(), "/ruta/al/enlace")
+
+    def test_carpeta_add(self):
+        # Prueba para el método add de Carpeta
+        carpeta = Carpeta("Carpeta")
+        documento = Documento("Documento", "Contenido", "Texto", 10)
+        carpeta.add(documento)
+        self.assertIn(documento, carpeta._children)
+
+    def test_carpeta_remove(self):
+        # Prueba para el método remove de Carpeta
+        carpeta = Carpeta("Carpeta")
+        documento = Documento("Documento", "Contenido", "Texto", 10)
+        carpeta.add(documento)
+        carpeta.remove(documento)
+        self.assertNotIn(documento, carpeta._children)
+
+    def test_carpeta_access(self):
+        # Prueba para el método access de Carpeta
+        carpeta = Carpeta("Carpeta")
+        documento = Documento("Documento", "Contenido", "Texto", 10)
+        carpeta.add(documento)
+        self.assertEqual(carpeta.access(), ["Archivo Documento"])
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
