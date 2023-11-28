@@ -25,13 +25,11 @@ class Proxy(Subject):
     def __init__(self, real_subject: RealSubject) -> None:
         self._real_subject = real_subject
 
-    def request(self, f):
-        def funcion_decorada(*args, **kwargs):
-            if self.check_access():
-                self._real_subject.request()
-                self.log_access()
-                return f(*args, **kwargs)
-        return funcion_decorada
+    def request(self):
+        if self.check_access():
+            self._real_subject.request()
+            self.log_access()
+            return True
 
     def check_access(self) -> bool:
         print("Proxy: Checking access prior to firing a real request.")

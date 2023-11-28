@@ -2,7 +2,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import List
 from config import limpiar_pantalla
-from proxy import Proxy
+from proxy import *
 
 
 class Component(ABC):
@@ -40,40 +40,64 @@ class Documento(Component):
         self._tipo = tipo
         self._tam = tam
         self._sensible = sensible 
+        self._acces = False
     
-    @Proxy.request
     def add(self):
-        print("Este es el contenido de su documento: \n\n" + self._contenido)
-        input("Pulse cualquier tecla para continuar...")
-        limpiar_pantalla()
-        print("Introduzca el texto que desea añadir al documento, se añadirá al final del mismo: ")
-        texto = input(">> ")
-        self._contenido += texto
-        limpiar_pantalla()
-        print("Se ha añadido el texto correctamente.\n\nEste es el contenido de su documento actualizado: \n\n" + self._contenido)
-        input("Pulse cualquier tecla para continuar...")
+        if self._access: # Sólo lo pudes modificar si ya has registrado tu acceso
+            print("Este es el contenido de su documento: \n\n" + self._contenido)
+            input("Pulse cualquier tecla para continuar...")
+            limpiar_pantalla()
+            print("Introduzca el texto que desea añadir al documento, se añadirá al final del mismo: ")
+            texto = input(">> ")
+            self._contenido += texto
+            limpiar_pantalla()
+            print("Se ha añadido el texto correctamente.\n\nEste es el contenido de su documento actualizado: \n\n" + self._contenido)
+            input("Pulse cualquier tecla para continuar...")
+        else:
+            print("No puede modificar el documento si no ha registrado su acceso previamente.")
+            input("Pulse cualquier tecla para continuar...")
 
-    @Proxy.request
     def remove(self):
-        print("Este es el contenido de su documento: \n\n" + self._contenido)
-        input("Pulse cualquier tecla para continuar...")
-        limpiar_pantalla()
-        print("Introduzca el texto que desea eliminar del documento: ")
-        texto = input(">> ")
-        self._contenido = self._contenido.replace(texto, "")
-        limpiar_pantalla()
-        print("Se ha eliminado el texto correctamente.\n\nEste es el contenido de su documento actualizado: \n\n" + self._contenido)
-        input("Pulse cualquier tecla para continuar...")
+        if self._access: # Sólo lo pudes modificar si ya has registrado tu acceso
+            print("Este es el contenido de su documento: \n\n" + self._contenido)
+            input("Pulse cualquier tecla para continuar...")
+            limpiar_pantalla()
+            print("Introduzca el texto que desea eliminar del documento: ")
+            texto = input(">> ")
+            self._contenido = self._contenido.replace(texto, "")
+            limpiar_pantalla()
+            print("Se ha eliminado el texto correctamente.\n\nEste es el contenido de su documento actualizado: \n\n" + self._contenido)
+            input("Pulse cualquier tecla para continuar...")
+        else:
+            print("No puede modificar el documento si no ha registrado su acceso previamente.")
+            input("Pulse cualquier tecla para continuar...")
 
     def get_name(self) -> str:
         return self._nombre
     
     def tam(self) -> str:
         return self._tam
-
-    @Proxy.request
+ 
     def access(self):
-        return self._contenido
+        if self._sensible:
+            while True:
+                limpiar_pantalla()
+                print("El documento es sensible, se va a registrar su acceso. Facilite los siguientes datos:")
+                nombre = input("Nombre: ")
+                apellido = input("Apellido: ")
+                dni = input("DNI: ")
+                if nombre.isalpha() and apellido.isalpha() and dni.isalnum() and len(dni) == 9:
+                    break
+                else:
+                    limpiar_pantalla()
+                    print("Los datos introducidos no son válidos, inténtelo de nuevo.")
+                    print("Asegúrese de no introducir espacios y de que el DNI tenga 8 dígitos y 1 letra.")
+            
+            real_subject = RealSubject(nombre, apellido, dni)
+            self._acces = Proxy(real_subject).request()
+        if self._acces:
+            return self._contenido
+        return "No tiene acceso a este documento"
 
 class Enlace(Component):
     def __init__(self, ruta) -> None:
