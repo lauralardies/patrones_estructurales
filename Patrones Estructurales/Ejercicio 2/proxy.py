@@ -14,7 +14,7 @@ class RealSubject(Subject):
         self._apellido = apellido
         self._dni = dni
 
-    @log('accesos/registro_accesos.log')
+    @log('Patrones Estructurales/Ejercicio 2/accesos/registro_accesos.log')
     def request(self) -> None:
         '''
         Si el usuario hace una petición, se mostrará su nombre, apellido y dni.

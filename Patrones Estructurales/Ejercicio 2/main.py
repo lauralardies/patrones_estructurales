@@ -19,7 +19,7 @@ def client_code(component: Component) -> None:
         limpiar_pantalla()
         if opcion == "1":
             nombre = input("Introduzca el nombre de la carpeta: ")
-            component.add(Carpeta(nombre))
+            component.add(Carpeta(nombre, component))
             limpiar_pantalla()
             print("Carpeta creada correctamente.")
             input("Pulse enter para continuar.")
@@ -49,8 +49,15 @@ def client_code(component: Component) -> None:
                     input("Pulse enter para continuar.")
                     continue
             limpiar_pantalla()
-            component.add(Documento(nombre, contenido, tipo, tam))
+            print("¿Es un documento sensible? Y/[N]")
+            seleccion = input(">> ")
             limpiar_pantalla()
+            if seleccion.capitalize() == "Y":
+                component.add(Documento(nombre, contenido, tipo, tam, True))
+                print("El documento es sensible, se registraran los datos de todo aquel que acceda a él.")
+            else:
+                component.add(Documento(nombre, contenido, tipo, tam))
+                print("El documento no es sensible, no se registrarán los datos de todo aquel que acceda a él.")
             print("Documento creado correctamente.")
             input("Pulse enter para continuar.")
         elif opcion == "3":
@@ -68,10 +75,44 @@ def client_code(component: Component) -> None:
             print("Enlace creado correctamente.")
             input("Pulse enter para continuar.")
         elif opcion == "4":
-            pass
+            while True:
+                # Mostramos el contenido de la carpeta
+                print(f"Contenido {component.get_name()}: ")
+                contenido = component.access()
+                for c in contenido:
+                    print(f"- {c}")
+                elemento = input("\n\nIntroduzca el nombre del elemento que desea acceder: ")
+                if elemento not in component.access():
+                    limpiar_pantalla()
+                    print("Este elemento no existe en la carpeta. Inténtelo de nuevo. Asegúrese de incluir Archivo, Carpeta o Enlace en el nombre.")
+                    input("Pulse enter para continuar.")
+                    limpiar_pantalla()
+                else:
+                    if 'Archivo' in elemento:
+                        tipo = 'Archivo'
+                    elif 'Carpeta' in elemento:
+                        tipo = 'Carpeta'
+                    elif 'Enlace' in elemento:
+                        tipo = 'Enlace'
+                    break
+            for child in component._children:
+                if child.get_name() == elemento:
+                    elemento = child
+                    break
+            if tipo == 'Carpeta':
+                component = elemento
+            else:
+                print("Contenido:\n\n")
+                print(elemento.access())
+                input("\n\nPulse enter para continuar.")
         elif opcion == "5":
             while True:
-                elemento = input("Introduzca el nombre del elemento que desea eliminar: ")
+                # Mostramos el contenido de la carpeta
+                print(f"Contenido {component.get_name()}: ")
+                contenido = component.access()
+                for c in contenido:
+                    print(f"- {c}")
+                elemento = input("\n\nIntroduzca el nombre del elemento que desea eliminar: ")
                 if elemento not in component.access():
                     limpiar_pantalla()
                     print("Este elemento no existe en la carpeta. Inténtelo de nuevo. Asegúrese de incluir Archivo, Carpeta o Enlace en el nombre.")
@@ -88,9 +129,12 @@ def client_code(component: Component) -> None:
             print("Elemento eliminado correctamente.")
             input("Pulse enter para continuar.")
         elif opcion == "6":
-            print("Saliendo...")
-            input("Pulse enter para continuar.")
-            break
+            if component._parent == None:
+                print("Saliendo...")
+                input("Pulse enter para continuar.")
+                break
+            else:
+                component = component._parent
         else:
             print("Opción no válida. Inténtelo de nuevo.")
             input("Pulse enter para continuar.")

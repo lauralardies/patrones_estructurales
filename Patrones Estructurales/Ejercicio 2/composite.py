@@ -115,8 +115,9 @@ class Enlace(Component):
 
 
 class Carpeta(Component):
-    def __init__(self, nombre) -> None:
+    def __init__(self, nombre, parent=None) -> None:
         self._nombre = nombre
+        self._parent = parent
         self._children: List[Component] = []
         self._tam = 0
 
