@@ -5,7 +5,7 @@ from proxy import Proxy
 from documento import Documento
 from enlace import Enlace
 from carpeta import Carpeta
-#from tu_modulo import , Documento, Enlace, Carpeta, client_code
+
 
 class TestTuModulo(unittest.TestCase):
 

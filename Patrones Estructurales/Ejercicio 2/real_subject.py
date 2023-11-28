@@ -1,6 +1,7 @@
 from log import log
 from subject import Subject
 
+
 class RealSubject(Subject):
     def __init__(self, nombre, apellido, dni) -> None:
         self._nombre = nombre
