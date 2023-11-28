@@ -12,11 +12,15 @@ class Carpeta(Component):
     def add(self, component: Component) -> None:
         self._children.append(component)
         self._tam += int(component.tam())
+        if self._parent is not None:
+            self._parent._tam += int(component.tam())
         component.parent = self
 
     def remove(self, component: Component) -> None:
         self._children.remove(component)
         self._tam -= int(component.tam())
+        if self._parent is not None:
+            self._parent._tam -= int(component.tam())        
         component.parent = None
 
     def get_name(self) -> str:
