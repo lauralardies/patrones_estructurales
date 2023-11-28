@@ -4,7 +4,6 @@ from typing import List
 from config import limpiar_pantalla
 
 
-
 class Component(ABC):
     @property
     def parent(self) -> Component:
@@ -21,11 +20,11 @@ class Component(ABC):
         pass
 
     @abstractmethod
-    def tam(self) -> str:
+    def get_name(self) -> str:
         pass
 
     @abstractmethod
-    def get_name(self) -> str:
+    def tam(self) -> str:
         pass
 
     @abstractmethod
@@ -62,12 +61,12 @@ class Documento(Component):
         limpiar_pantalla()
         print("Se ha eliminado el texto correctamente.\n\nEste es el contenido de su documento actualizado: \n\n" + self._contenido)
         input("Pulse cualquier tecla para continuar...")
-         
-    def tam(self) -> str:
-        return self._tam
-    
+
     def get_name(self) -> str:
         return self._nombre
+    
+    def tam(self) -> str:
+        return self._tam
     
     def access(self):
         return self._contenido
@@ -78,11 +77,11 @@ class Enlace(Component):
         self._ruta = ruta
         self._tam = tam # Tamaño simbólico
 
-    def tam(self) -> str:
-        return self._tam
-    
     def get_name(self) -> str:
         return self._nombre
+    
+    def tam(self) -> str:
+        return self._tam
     
     def access(self):
         return self._ruta
