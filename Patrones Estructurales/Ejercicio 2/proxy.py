@@ -30,6 +30,7 @@ class Proxy(Subject):
             self._real_subject.request()
             self.log_access()
             return True
+        return False
 
     def check_access(self) -> bool:
         print("Proxy: Checking access prior to firing a real request.")

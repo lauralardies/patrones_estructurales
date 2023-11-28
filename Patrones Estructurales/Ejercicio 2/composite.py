@@ -40,7 +40,7 @@ class Documento(Component):
         self._tipo = tipo
         self._tam = tam
         self._sensible = sensible 
-        self._acces = False
+        self._access = False
     
     def add(self):
         if self._access: # Sólo lo pudes modificar si ya has registrado tu acceso
@@ -94,8 +94,8 @@ class Documento(Component):
                     print("Asegúrese de no introducir espacios y de que el DNI tenga 8 dígitos y 1 letra.")
             
             real_subject = RealSubject(nombre, apellido, dni)
-            self._acces = Proxy(real_subject).request()
-        if self._acces:
+            self._access = Proxy(real_subject).request()
+        if self._access:
             return self._contenido
         return "No tiene acceso a este documento"
 
