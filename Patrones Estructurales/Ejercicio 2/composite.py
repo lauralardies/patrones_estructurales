@@ -40,7 +40,6 @@ class Documento(Component):
         self._tipo = tipo
         self._tam = tam
         self._sensible = sensible
-        self._access = False # Variable que indica si estás dentro del documento o no
     
     def add(self):
         print("Este es el contenido de su documento: \n\n" + self._contenido)
