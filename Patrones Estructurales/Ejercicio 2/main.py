@@ -12,7 +12,8 @@ def client_code(component: Component) -> None:
         print("1. Crear carpeta")
         print("2. Crear documento")
         print("3. Crear enlace")
-        print("5. Acceder")
+        print("4. Acceder elemento")
+        print("5. Eliminar elemento")
         print("6. Salir")
         opcion = input("Introduzca el número de la opción que desee: ")
         limpiar_pantalla()
@@ -53,11 +54,39 @@ def client_code(component: Component) -> None:
             print("Documento creado correctamente.")
             input("Pulse enter para continuar.")
         elif opcion == "3":
-            pass
+            while True:
+                ruta = input("Introduzca la ruta del enlace: ")
+                if "/" not in ruta:
+                    limpiar_pantalla()
+                    print("Ruta no válida. Inténtelo de nuevo. Debe incluir al menos un '/'.")
+                    input("Pulse enter para continuar.")
+                    limpiar_pantalla()
+                else:
+                    break
+            component.add(Enlace(ruta))
+            limpiar_pantalla()
+            print("Enlace creado correctamente.")
+            input("Pulse enter para continuar.")
         elif opcion == "4":
             pass
         elif opcion == "5":
-            pass
+            while True:
+                elemento = input("Introduzca el nombre del elemento que desea eliminar: ")
+                if elemento not in component.access():
+                    limpiar_pantalla()
+                    print("Este elemento no existe en la carpeta. Inténtelo de nuevo. Asegúrese de incluir Archivo, Carpeta o Enlace en el nombre.")
+                    input("Pulse enter para continuar.")
+                    limpiar_pantalla()
+                else:
+                    break
+            for child in component._children:
+                if child.get_name() == elemento:
+                    elemento = child
+                    break
+            component.remove(elemento)
+            limpiar_pantalla()
+            print("Elemento eliminado correctamente.")
+            input("Pulse enter para continuar.")
         elif opcion == "6":
             print("Saliendo...")
             input("Pulse enter para continuar.")
