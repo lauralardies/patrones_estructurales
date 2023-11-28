@@ -5,6 +5,7 @@ def client_code(component: Component) -> None:
         limpiar_pantalla()
         # Mostramos el contenido de la carpeta
         print(f"Contenido {component.get_name()}: ")
+        print(f"Tamaño: {component.tam()} bytes")
         contenido = component.access()
         for c in contenido:
             print(f"- {c}")
@@ -82,6 +83,7 @@ def client_code(component: Component) -> None:
             while True:
                 # Mostramos el contenido de la carpeta
                 print(f"Contenido {component.get_name()}: ")
+                print(f"Tamaño: {component.tam()} bytes")
                 contenido = component.access()
                 for c in contenido:
                     print(f"- {c}")
@@ -103,18 +105,29 @@ def client_code(component: Component) -> None:
                 if child.get_name() == elemento:
                     elemento = child
                     break
+
             if tipo == 'Carpeta':
                 component = elemento
-            else:
+
+            elif tipo == 'Archivo':
+                limpiar_pantalla()
+                contenido = elemento.access()
+                print("\nContenido:\n")
+                print(contenido)
+                input("\nPulse enter para continuar.")
+            
+            elif tipo == 'Enlace':
                 limpiar_pantalla()
                 print("Contenido:\n")
                 print(elemento.access())
                 input("\nPulse enter para continuar.")
 
+
         elif opcion == "5":
             while True:
                 # Mostramos el contenido de la carpeta
                 print(f"Contenido {component.get_name()}: ")
+                print(f"Tamaño: {component.tam()} bytes")
                 contenido = component.access()
                 for c in contenido:
                     print(f"- {c}")
@@ -142,7 +155,7 @@ def client_code(component: Component) -> None:
                 break
             else:
                 component = component._parent
-                
+
         else:
             print("Opción no válida. Inténtelo de nuevo.")
             input("Pulse enter para continuar.")

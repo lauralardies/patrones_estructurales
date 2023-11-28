@@ -92,10 +92,13 @@ class Documento(Component):
                     limpiar_pantalla()
                     print("Los datos introducidos no son válidos, inténtelo de nuevo.")
                     print("Asegúrese de no introducir espacios y de que el DNI tenga 8 dígitos y 1 letra.")
+
             real_subject = RealSubject(nombre, apellido, dni)
             self._access = Proxy(real_subject).request()
+
             if not self._access:
                 return "No tiene acceso a este documento"
+            
         return self._contenido
 
 
