@@ -22,6 +22,10 @@ class Component(ABC):
     def tam(self) -> str:
         pass
 
+    @abstractmethod
+    def access(self) -> None:
+        pass
+
 
 class Documento(Component):
     def __init__(self, nombre, tipo, tam) -> None:
@@ -31,15 +35,21 @@ class Documento(Component):
 
     def tam(self) -> str:
         return self._tam
+    
+    def access(self) -> str:
+        return self._nombre
 
 
 class Enlace(Component):
-    def __init__(self, contenido, tam) -> None:
-        self._contenido = contenido
+    def __init__(self, ruta, tam) -> None:
+        self._ruta = ruta
         self._tam = tam # Tamaño simbólico
 
     def tam(self) -> str:
         return self._tam
+    
+    def access(self) -> str:
+        return self._nombre
 
 
 class Carpeta(Component):
@@ -56,3 +66,6 @@ class Carpeta(Component):
 
     def tam(self) -> str:
         return sum([x.tam() for x in self._children])
+    
+    def access(self) -> None:
+        return [x.access() for x in self._children]
