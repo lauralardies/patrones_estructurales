@@ -1,4 +1,9 @@
-from composite import *
+from component import Component
+from config import limpiar_pantalla
+from carpeta import Carpeta
+from documento import Documento
+from enlace import Enlace
+
 
 def client_code(component: Component) -> None:
     while True:
