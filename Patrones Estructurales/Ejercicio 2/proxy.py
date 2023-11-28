@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from log import log
 
+
 class Subject(ABC):
     @abstractmethod
     def request(self) -> None:
