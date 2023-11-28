@@ -94,9 +94,10 @@ class Documento(Component):
                     print("Asegúrese de no introducir espacios y de que el DNI tenga 8 dígitos y 1 letra.")
             real_subject = RealSubject(nombre, apellido, dni)
             self._access = Proxy(real_subject).request()
-        if self._access:
-            return self._contenido
-        return "No tiene acceso a este documento"
+            if not self._access:
+                return "No tiene acceso a este documento"
+        return self._contenido
+
 
 class Enlace(Component):
     def __init__(self, ruta) -> None:

@@ -17,12 +17,14 @@ def client_code(component: Component) -> None:
         print("6. Salir")
         opcion = input("Introduzca el número de la opción que desee: ")
         limpiar_pantalla()
+
         if opcion == "1":
             nombre = input("Introduzca el nombre de la carpeta: ")
             component.add(Carpeta(nombre, component))
             limpiar_pantalla()
             print("Carpeta creada correctamente.")
             input("Pulse enter para continuar.")
+
         elif opcion == "2":
             nombre = input("Introduzca el nombre del documento: ")
             while True:
@@ -60,6 +62,7 @@ def client_code(component: Component) -> None:
                 print("El documento no es sensible, no se registrarán los datos de todo aquel que acceda a él.")
             print("Documento creado correctamente.")
             input("Pulse enter para continuar.")
+
         elif opcion == "3":
             while True:
                 ruta = input("Introduzca la ruta del enlace: ")
@@ -74,6 +77,7 @@ def client_code(component: Component) -> None:
             limpiar_pantalla()
             print("Enlace creado correctamente.")
             input("Pulse enter para continuar.")
+
         elif opcion == "4":
             while True:
                 # Mostramos el contenido de la carpeta
@@ -102,9 +106,11 @@ def client_code(component: Component) -> None:
             if tipo == 'Carpeta':
                 component = elemento
             else:
-                print("Contenido:\n\n")
+                limpiar_pantalla()
+                print("Contenido:\n")
                 print(elemento.access())
-                input("\n\nPulse enter para continuar.")
+                input("\nPulse enter para continuar.")
+
         elif opcion == "5":
             while True:
                 # Mostramos el contenido de la carpeta
@@ -128,6 +134,7 @@ def client_code(component: Component) -> None:
             limpiar_pantalla()
             print("Elemento eliminado correctamente.")
             input("Pulse enter para continuar.")
+
         elif opcion == "6":
             if component._parent == None:
                 print("Saliendo...")
@@ -135,6 +142,7 @@ def client_code(component: Component) -> None:
                 break
             else:
                 component = component._parent
+                
         else:
             print("Opción no válida. Inténtelo de nuevo.")
             input("Pulse enter para continuar.")
