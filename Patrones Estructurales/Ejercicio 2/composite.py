@@ -69,6 +69,9 @@ class Enlace(Component):
     
     def list_element(self) -> str:
         return self._nombre
+    
+    def access(self):
+        return self._ruta
 
 
 class Carpeta(Component):
@@ -86,5 +89,5 @@ class Carpeta(Component):
     def tam(self) -> str:
         return sum([x.tam() for x in self._children])
     
-    def list_element(self) -> None:
-        return [x.access() for x in self._children]
+    def access(self) -> None:
+        return [x.list_element() for x in self._children]
