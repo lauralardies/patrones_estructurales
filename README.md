@@ -57,6 +57,7 @@ El SAMUR-Protección Civil, tras su proceso de digitalización, se enfrenta al r
 ## Archivos
 
 Todos los archivos están guardados en una carpeta llamada `Patrones Estructurales`, que a su vez contiene:
+- Archivo `requirements.txt` que incluye todas las librerías necesarias para poder ejecutar el código que no vienen incluidas con Python. Es decir, en este archivo incluimos las bibioteclas que tenemos que instalar por separado empleando el comando `pip`. 
 - Carpeta `Ejercicio 1`:
   - Carpeta `data`. Aquí se genera un archivo `pizza_cliente.csv` donde se van almacenando las pizzas que pide el cliente.
   - Carpeta `uml`. Aquí se guarda una imagen PNG que representa un diagrama de clases del patrón Composite que hemos desarrollado.
@@ -85,6 +86,8 @@ Todos los archivos están guardados en una carpeta llamada `Patrones Estructural
   - Archivos que conforman un patrón Proxy. Estos archivos son: `proxy.py`, `real_subject.py`, `subject.py`.
   - Archivo `main.py`, código cliente que junta ambos patrones y es lo que ve el usuario.
   - Archivo `run.py`, el lanzador.
+
+Además, encontramos una carpeta llamada `venv` que incluye un entorno para este proyecto. 
 
 ## Código
 
