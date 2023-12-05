@@ -87,7 +87,7 @@ Todos los archivos están guardados en una carpeta llamada `Patrones Estructural
   - Archivo `main.py`, código cliente que junta ambos patrones y es lo que ve el usuario.
   - Archivo `run.py`, el lanzador.
 
-Además, encontramos una carpeta llamada `venv` que incluye un entorno para este proyecto. 
+Además, encontramos una carpeta llamada `entorno` que incluye un entorno para este proyecto. 
 
 ## Código
 
