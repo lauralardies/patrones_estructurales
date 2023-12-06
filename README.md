@@ -57,7 +57,7 @@ El SAMUR-Protección Civil, tras su proceso de digitalización, se enfrenta al r
 ## Archivos
 
 Todos los archivos están guardados en una carpeta llamada `Patrones Estructurales`, que a su vez contiene:
-- Archivo `requirements.txt` que incluye todas las librerías necesarias para poder ejecutar el código que no vienen incluidas con Python. Es decir, en este archivo incluimos las bibioteclas que tenemos que instalar por separado empleando el comando `pip`. 
+- Archivo `requirements.txt` que incluye todas las librerías necesarias para poder ejecutar el código que no vienen incluidas con Python. Es decir, en este archivo incluimos las bibliotecas que tenemos que instalar por separado empleando el comando `pip`. 
 - Carpeta `Ejercicio 1`:
   - Carpeta `data`. Aquí se genera un archivo `pizza_cliente.csv` donde se van almacenando las pizzas que pide el cliente.
   - Carpeta `uml`. Aquí se guarda una imagen PNG que representa un diagrama de clases del patrón Composite que hemos desarrollado.
@@ -87,7 +87,13 @@ Todos los archivos están guardados en una carpeta llamada `Patrones Estructural
   - Archivo `main.py`, código cliente que junta ambos patrones y es lo que ve el usuario.
   - Archivo `run.py`, el lanzador.
 
-Además, encontramos una carpeta llamada `venv` que incluye un entorno para este proyecto. 
+Además, encontramos una carpeta llamada `entorno` que incluye un entorno para este proyecto. 
+
+## Ejecutar programa
+
+Ejecutar los dos ejercicios de esta entrega es muy sencillo. 
+- Para ejecutar el ejercicio 1, accede a la carpeta `Ejercicio 1` y ejecuta el archivo `run.py` que como ya hemos dicho, es el lanzador de este ejercicio. En consola se mostrará un menú desde el cual el usuario podrá ir pidiendo pizzas.
+- Para ejecutar el ejercicio 2, accede esta vez a la carpeta `Ejercicio 2` y ejecuta el archivo `run.py` de dicha carpeta, el lanzador del ejercicio 2. En consola se mostrará un menú desde el cual el usuario podrá crear, acceder, modificar y eliminar carpetas, documentos y/o enlaces.
 
 ## Código
 
