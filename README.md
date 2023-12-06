@@ -93,7 +93,7 @@ Además, fuera de esta carpeta `Patrones Estructurales` encontramos una carpeta 
 ## Ejecutar programa
 
 Ejecutar los dos ejercicios de esta entrega es muy sencillo. 
-- Para ejecutar el ejercicio 1, accede a la carpeta `Ejercicio 1` y ejecuta el archivo `run.py` que como ya hemos dicho, es el lanzador de este ejercicio. En consola se mostrará un menú desde el cual el usuario podrá ir pidiendo pizzas.
+- Para ejecutar el ejercicio 1, accede a la carpeta `Ejercicio 1` y ejecuta el archivo `run.py` que como ya hemos dicho, es el lanzador de este ejercicio. En consola se mostrará un menú desde el cual el usuario podrá ir pidiendo pizzas y/o menús.
 
 <img alt="uml" src="https://github.com/lauralardies/patrones_estructurales/blob/main/Patrones Estructurales/img/menu_ej1.png">
 
